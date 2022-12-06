@@ -15,7 +15,7 @@ public class DataHelper {
     private static final String FirstCard = "5559 0000 0000 0001";
     private static final String SecondCard = "5559 0000 0000 0002";
 
-    public static String SummaTransfer = "13000";
+    public static String SummaTransfer = "300";
 
 
     // private - из вне никто вызвать не сможет.
