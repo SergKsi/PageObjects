@@ -1,6 +1,5 @@
 package ru.netology.web.page;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.web.data.DataHelper;
 
@@ -11,7 +10,7 @@ public class TransferPage {
 
     private SelenideElement summaTransfer = $("[data-test-id=\"amount\"] input");
     private SelenideElement fromCard = $("[data-test-id=\"from\"] input");
-//    private SelenideElement onCard = $("[data-test-id=\"to\"] input");
+    //    private SelenideElement onCard = $("[data-test-id=\"to\"] input");
     private SelenideElement transferButton = $("[data-test-id=\"action-transfer\"]");
 
     public TransferPage() {
@@ -22,9 +21,14 @@ public class TransferPage {
     public YourCardsPage validTransfer(DataHelper.TransferData transferData) {
         summaTransfer.setValue(transferData.getSumma());
         fromCard.setValue(transferData.getFromCard());
-//        onCard.setValue(transferData.getOnCard());
         transferButton.click();
         return new YourCardsPage();
     }
 
+    public YourCardsPage noValidTransfer(DataHelper.TransferData transferData) {
+        summaTransfer.setValue("50000");
+        fromCard.setValue(transferData.getFromCard());
+        transferButton.click();
+        return new YourCardsPage();
+    }
 }
