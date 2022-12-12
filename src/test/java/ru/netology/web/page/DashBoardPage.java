@@ -1,8 +1,11 @@
 package ru.netology.web.page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import lombok.val;
+import ru.netology.web.data.DataHelper;
+
+import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -14,22 +17,27 @@ public class DashBoardPage {
     private static ElementsCollection cards = $$(".list__item div");
     private static final String balanceStart = "баланс: ";
     private static final String balanceFinish = " р.";
+
     public DashBoardPage() {
         heading.shouldBe(visible);
     }
+
     public TransferPage selectFirstCard() {
         depositButtonFirst.click();
         return new TransferPage();
     }
+
     public TransferPage selectSecondCard() {
         depositButtonSecond.click();
         return new TransferPage();
     }
-    public static int getBalanceCard(int index) {
+
+    public int getBalanceCard(int index) {
         var text = cards.get(index).text();
         return extractBalance(text);
     }
-    private static int extractBalance(String text) {
+
+    private int extractBalance(String text) {
         var start = text.indexOf(balanceStart);
         var finish = text.indexOf(balanceFinish);
         var value = text.substring(start + balanceStart.length(), finish);

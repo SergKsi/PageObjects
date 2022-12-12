@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import ru.netology.web.data.DataHelper;
 import org.junit.jupiter.api.Test;
 import ru.netology.web.page.LoginPage;
+
 import static com.codeborne.selenide.Selenide.open;
 import static ru.netology.web.data.DataHelper.*;
 
@@ -24,7 +25,7 @@ public class MoneyTranferTest {
         var expectedBalanceCardFirst = balanceCardFirst + summa;
         var expectedBalanceCardSecond = balanceCardSecond - summa;
         var tranferPage = dashBoardPage.selectFirstCard();
-        dashBoardPage = tranferPage.transferCard(String.valueOf(summa), secondCardInfo);
+        dashBoardPage = tranferPage.transferValidCard(String.valueOf(summa), secondCardInfo);
         var actualBalanceCardFirst = dashBoardPage.getBalanceCard(0);
         var actualBalanceCardSecond = dashBoardPage.getBalanceCard(1);
         Assertions.assertEquals(expectedBalanceCardFirst, actualBalanceCardFirst);
@@ -47,7 +48,7 @@ public class MoneyTranferTest {
         var expectedBalanceCardFirst = balanceCardFirst - summa;
         var expectedBalanceCardSecond = balanceCardSecond + summa;
         var tranferPage = dashBoardPage.selectSecondCard();
-        dashBoardPage = tranferPage.transferCard(String.valueOf(summa), firstCardInfo);
+        dashBoardPage = tranferPage.transferValidCard(String.valueOf(summa), firstCardInfo);
         var actualBalanceCardFirst = dashBoardPage.getBalanceCard(0);
         var actualBalanceCardSecond = dashBoardPage.getBalanceCard(1);
         Assertions.assertEquals(expectedBalanceCardFirst, actualBalanceCardFirst);
@@ -68,12 +69,13 @@ public class MoneyTranferTest {
         var balanceCardFirst = dashBoardPage.getBalanceCard(0);
         var balanceCardSecond = dashBoardPage.getBalanceCard(1);
         var summa = genBadValidSumma(balanceCardFirst);
+        var expectedBalanceCardFirst = balanceCardFirst - summa;
+        var expectedBalanceCardSecond = balanceCardSecond + summa;
         var tranferPage = dashBoardPage.selectSecondCard();
         tranferPage.transferCard(String.valueOf(summa), firstCardInfo);
-        var actualBalanceCardFirst = balanceCardFirst;
-        var actualBalanceCardSecond = balanceCardSecond;
-        Assertions.assertEquals(balanceCardFirst, actualBalanceCardFirst);
-        Assertions.assertEquals(balanceCardSecond, actualBalanceCardSecond);
+        var actualBalanceCardFirst = dashBoardPage.getBalanceCard(0);
+        var actualBalanceCardSecond = dashBoardPage.getBalanceCard(1);
+        Assertions.assertEquals(expectedBalanceCardFirst, actualBalanceCardFirst);
+        Assertions.assertEquals(expectedBalanceCardSecond, actualBalanceCardSecond);
     }
-
 }
