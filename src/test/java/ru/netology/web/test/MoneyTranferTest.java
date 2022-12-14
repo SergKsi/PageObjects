@@ -73,9 +73,10 @@ public class MoneyTranferTest {
         var expectedBalanceCardSecond = balanceCardSecond + summa;
         var tranferPage = dashBoardPage.selectSecondCard();
         tranferPage.transferCard(String.valueOf(summa), firstCardInfo);
+        tranferPage.findMessageError("Остаток на карте списания отрицательный !!!");
         var actualBalanceCardFirst = dashBoardPage.getBalanceCard(0);
         var actualBalanceCardSecond = dashBoardPage.getBalanceCard(1);
-        Assertions.assertEquals(expectedBalanceCardFirst, actualBalanceCardFirst);
-        Assertions.assertEquals(expectedBalanceCardSecond, actualBalanceCardSecond);
+        Assertions.assertEquals(balanceCardFirst, actualBalanceCardFirst);
+        Assertions.assertEquals(balanceCardSecond, actualBalanceCardSecond);
     }
 }
